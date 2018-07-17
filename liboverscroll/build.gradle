@@ -49,3 +49,8 @@ artifacts {
     archives javadocJar
     archives sourcesJar
 }
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
