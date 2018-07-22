@@ -15,18 +15,17 @@ import me.everything.overscrolldemo.R;
 /**
  * @author amitd
  */
-public class ScrollViewDemoFragment extends Fragment {
+public class HorizontalScrollViewFragment extends Fragment {
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View fragmentView = inflater.inflate(R.layout.scrollview_overscroll_demo, null, false);
-
-        initVerticalScrollView((ScrollView) fragmentView.findViewById(R.id.vertical_scroll_view));
+        View fragmentView = inflater.inflate(R.layout.horizontal_scroll_overscroll_demo, null, false);
+        initHorizontalScrollView((HorizontalScrollView) fragmentView.findViewById(R.id.horizontal_scroll_view));
         return fragmentView;
     }
 
-    private void initVerticalScrollView(ScrollView scrollView) {
+    private void initHorizontalScrollView(HorizontalScrollView scrollView) {
         OverScrollDecoratorHelper.setUpOverScroll(scrollView);
     }
 

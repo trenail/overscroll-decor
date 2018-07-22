@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import me.everything.overscrolldemo.view.GridViewDemoFragment;
+import me.everything.overscrolldemo.view.HorizontalScrollViewFragment;
 import me.everything.overscrolldemo.view.ListViewDemoFragment;
 import me.everything.overscrolldemo.view.MiscViewsDemoFragment;
 import me.everything.overscrolldemo.view.NestedScrollViewDemoFragment;
@@ -18,6 +19,7 @@ import me.everything.overscrolldemo.view.RecyclerViewDemoFragment;
 import me.everything.overscrolldemo.view.RecyclerViewStaggeredGridDemoFragment;
 import me.everything.overscrolldemo.view.ScrollViewDemoFragment;
 import me.everything.overscrolldemo.view.ViewPagerDemoFragment;
+import me.everything.overscrolldemo.view.WebViewDemoFragment;
 
 public class OverScrollDemoActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -81,13 +83,19 @@ public class OverScrollDemoActivity extends AppCompatActivity
                 replaceMainFragment(new ScrollViewDemoFragment(), R.string.scroll_view_demo_title);
                 break;
             case R.id.drawer_item_viewpager_demo:
-                replaceMainFragment(new ViewPagerDemoFragment(),R.string.viewpager_demo_title);
+                replaceMainFragment(new ViewPagerDemoFragment(), R.string.viewpager_demo_title);
                 break;
             case R.id.drawer_item_nested_scrollview_demo:
                 replaceMainFragment(new NestedScrollViewDemoFragment(), R.string.nested_scrollview_demo_title);
                 break;
             case R.id.drawer_item_misc_demo:
                 replaceMainFragment(new MiscViewsDemoFragment(), R.string.misc_views_demo_title);
+                break;
+            case R.id.horizontal_scroll_item_misc_demo:
+                replaceMainFragment(new HorizontalScrollViewFragment(), R.string.horizontal_scroll_view_demo_title);
+                break;
+            case R.id.webview_demo:
+                replaceMainFragment(new WebViewDemoFragment(), R.string.webview_demo_title);
                 break;
         }
 

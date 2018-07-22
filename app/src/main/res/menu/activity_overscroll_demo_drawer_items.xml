@@ -44,7 +44,17 @@
             android:icon="@drawable/ic_misc"
             android:title="Misc-Views Demo"
             />
+        <item
+            android:id="@+id/horizontal_scroll_item_misc_demo"
+            android:icon="@drawable/ic_misc"
+            android:title="HorizontalScrollView Demo"
+            />
 
+        <item
+            android:id="@+id/webview_demo"
+            android:icon="@drawable/ic_misc"
+            android:title="WebView Demo"
+            />
     </group>
 
 </menu>

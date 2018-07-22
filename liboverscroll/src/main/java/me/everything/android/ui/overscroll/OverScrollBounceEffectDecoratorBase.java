@@ -20,6 +20,7 @@ import me.everything.android.ui.overscroll.adapters.RecyclerViewOverScrollDecorA
 import static me.everything.android.ui.overscroll.IOverScrollState.STATE_BOUNCE_BACK;
 import static me.everything.android.ui.overscroll.IOverScrollState.STATE_DRAG_END_SIDE;
 import static me.everything.android.ui.overscroll.IOverScrollState.STATE_DRAG_START_SIDE;
+import static me.everything.android.ui.overscroll.IOverScrollState.STATE_FLING;
 import static me.everything.android.ui.overscroll.IOverScrollState.STATE_IDLE;
 import static me.everything.android.ui.overscroll.ListenerStubs.OverScrollStateListenerStub;
 import static me.everything.android.ui.overscroll.ListenerStubs.OverScrollUpdateListenerStub;
@@ -73,6 +74,8 @@ public abstract class OverScrollBounceEffectDecoratorBase implements IOverScroll
     public static final float DEFAULT_TOUCH_DRAG_MOVE_RATIO_BCK = 1f;
     public static final float DEFAULT_DECELERATE_FACTOR = -2f;
 
+    public static final float DEFAULT_TOUCH_FLING_MOVE_RATIO = 0.02f;//默认的抛掷速度与距离比值
+
     protected static final int MAX_BOUNCE_BACK_DURATION_MS = 800;
     protected static final int MIN_BOUNCE_BACK_DURATION_MS = 200;
 
@@ -81,11 +84,11 @@ public abstract class OverScrollBounceEffectDecoratorBase implements IOverScroll
 
     //默认状态
     protected final IdleState mIdleState;
-    //越界状态
+    //拖动越界状态
     protected final OverScrollingState mOverScrollingState;
     //越界回弹状态
     protected final BounceBackState mBounceBackState;
-
+    //抛掷越界状态
     protected final FlingState mFlingState;
 
     protected IDecoratorState mCurrentState;
@@ -215,27 +218,21 @@ public abstract class OverScrollBounceEffectDecoratorBase implements IOverScroll
                     int minVelocity = ViewConfiguration.get(getView().getContext()).getScaledMinimumFlingVelocity();
 
                     mVelocityTracker.computeCurrentVelocity(1000, maxVelocity);
-                    //更好的做法是将x或y的判断下放到子类去做,这里不想改动太多
-                    float velocity = Math.max(mVelocityTracker.getXVelocity(), mVelocityTracker.getYVelocity());
+
+                    float velocity = computeCurrentVelocity(mVelocityTracker);
+
                     if (Math.abs(velocity) > minVelocity) {
 
-                        mVelocityTracker.clear();
+                        //根据速度,得出滑动距离
+                        float value = velocity * DEFAULT_TOUCH_FLING_MOVE_RATIO;
 
-                        float value = velocity / 100;
-                        //根据方向,速度,得出滑动距离
-
-                        if (mMoveAttr.mDir) {
-                            value = Math.abs(value);
-                        } else {
-                            if (value > 0)
-                                value = -value;
-                        }
 
                         mFlingState.setParams(value);
                         //切换到抛掷状态
                         issueStateTransition(mFlingState);
 
-                        Log.d(TAG, "start fling : velocity:" + velocity + "\tmMoveAttr.mDir:" + mMoveAttr.mDir);
+                        Log.d(TAG, "start fling : value:" + value + "\tmMoveAttr.mDir:" + (mMoveAttr.mDir ? "forward" : "backwards"));
+                        mVelocityTracker.clear();
                     }
 
                 }
@@ -539,7 +536,7 @@ public abstract class OverScrollBounceEffectDecoratorBase implements IOverScroll
 
         @Override
         public int getStateId() {
-            return STATE_BOUNCE_BACK;
+            return STATE_FLING;
         }
 
         @Override
@@ -721,4 +718,7 @@ public abstract class OverScrollBounceEffectDecoratorBase implements IOverScroll
     protected abstract void translateView(View view, float offset);
 
     protected abstract void translateViewAndEvent(View view, float offset, MotionEvent event);
+
+    //计算速度
+    protected abstract float computeCurrentVelocity(VelocityTracker velocityTracker);
 }

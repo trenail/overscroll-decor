@@ -1,0 +1,77 @@
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
+Properties properties = new Properties()
+properties.load(project.file('bintray.properties').newDataInputStream())
+def siteUrl = properties.getProperty("bintray.siteUrl")
+def desc = properties.getProperty("bintray.descrip")
+// Maven Group ID for the artifact，一般填你唯一的包名
+group = properties.getProperty("bintray.group")
+version = properties.getProperty("bintray.version")
+def giturl = properties.getProperty("bintray.vcs")
+def userid = properties.getProperty("bintray.userid")
+def username = properties.getProperty("bintray.username")
+def useremail = properties.getProperty("bintray.useremail")
+def licensename = properties.getProperty("bintray.licensename")
+def licenseurl = properties.getProperty("bintray.licenseurl")
+install {
+    repositories.mavenInstaller {
+        // This generates POM.xml with proper parameters
+        pom {
+            project {
+                packaging 'aar'
+                // Add your description here
+                name desc //项目描述
+                url siteUrl
+                // Set your license
+                licenses {
+                    license {
+                        name licensename
+                        url licenseurl
+                    }
+                }
+                developers {
+                    developer {
+                        id userid
+                        name username
+                        email useremail
+                    }
+                }
+                scm {
+                    connection giturl
+                    developerConnection giturl
+                    url siteUrl
+                }
+            }
+        }
+    }
+}
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+artifacts {
+//    archives javadocJar
+    archives sourcesJar
+}
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.key")
+    configurations = ['archives']
+    pkg {
+        repo = "maven"
+        name = properties.getProperty("bintray.name") //发布到JCenter上的项目名字
+        websiteUrl = properties.getProperty("bintray.siteUrl")
+        vcsUrl = properties.getProperty("bintray.vcs")
+        licenses =[properties.getProperty("bintray.licenses")]
+        publish = true
+    }
+}

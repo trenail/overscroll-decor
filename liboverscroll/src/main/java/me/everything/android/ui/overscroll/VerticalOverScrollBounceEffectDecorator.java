@@ -1,6 +1,7 @@
 package me.everything.android.ui.overscroll;
 
 import android.view.MotionEvent;
+import android.view.VelocityTracker;
 import android.view.View;
 
 import me.everything.android.ui.overscroll.adapters.IOverScrollDecoratorAdapter;
@@ -95,5 +96,10 @@ public class VerticalOverScrollBounceEffectDecorator extends OverScrollBounceEff
     protected void translateViewAndEvent(View view, float offset, MotionEvent event) {
         view.setTranslationY(offset);
         event.offsetLocation(offset - event.getY(0), 0f);
+    }
+
+    @Override
+    protected float computeCurrentVelocity(VelocityTracker velocityTracker) {
+        return velocityTracker.getYVelocity(mStartAttr.mPointerId);
     }
 }

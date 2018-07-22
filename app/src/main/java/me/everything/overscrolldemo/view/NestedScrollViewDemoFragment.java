@@ -2,6 +2,7 @@ package me.everything.overscrolldemo.view;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.widget.NestedScrollView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +15,8 @@ public class NestedScrollViewDemoFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final ScrollView rootView = (ScrollView) inflater.inflate(R.layout.nested_scrollview_demo, null, false);
-        OverScrollDecoratorHelper.setUpOverScroll(rootView);
+        final NestedScrollView rootView = (NestedScrollView) inflater.inflate(R.layout.nested_scrollview_demo, null, false);
+       OverScrollDecoratorHelper.setUpOverScroll(rootView);
         return rootView;
     }
 }

@@ -1,30 +1,36 @@
 
-# Over-Scroll Support For Android's RecyclerView, ListView, GridView, ScrollView ...
+# 支持所有可滚动View 的 越界回弹效果，支持横向纵向，例如 RecyclerView, ListView, GridView, ScrollView ...
  
-The library provides an iOS-like over-scrolling effect applicable over almost all Android native scrollable views. It is also built to allow for very easy adaptation to support custom views.
+该项目从 https://github.com/EverythingMe/overscroll-decor 而来，并在此基础上增加了 抛掷越界回弹效果
+该项目提供了类似于ios的越界回弹效果（android默认的是水波纹效果），支持所有View，自定义控件也可以很方便的使用该功能
 
-The core effect classes are loose-[decorators](https://en.wikipedia.org/wiki/Decorator_pattern) of Android views, and are thus decoupled from the actual view classes' implementations. That allows developers to apply the effect over views while keeping them as untampered 'black-boxes'. Namely, it allows for keeping important optimizations such as view-recycling intact.
 
-![RecyclerView demo](recyclerview_demo.gif)
+1.该项目不是一个UI库，不提供任何View<br/> 
+2.使用该项目可以为 原生或自定义View 添加越界回弹效果<br/> 
+3.使用简单，一行代码<br/> 
+4.扩展方便，支持自定义布局管理器，自定义控件
 
-# Gradle Dependency
 
-Add the following to your module's `build.gradle` file:
+![原版示例](recyclerview_demo.gif)
+
+# Gradle 依赖
+
+将以下内容添加到模块的 build.gradle 文件中
 
 ```groovy
 dependencies {
     // ...
     
-    compile 'me.everything:overscroll-decor-android:1.0.4'
+    implementation 'me.trenail:overscroll-decor:1.0.5'
 }
 ```
 
-# Usage
+# 使用
 
 ### RecyclerView
 
-Supports both linear and staggered-grid layout managers (i.e. all native Android layouts).
-Can be easily adapted to support custom layout managers.
+支持线性布局管理器，网格布局管理器，而且稍加改动，就能支持自定义布局管理器
+
 
 ```java
 RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
@@ -34,9 +40,6 @@ OverScrollDecoratorHelper.setUpOverScroll(recyclerView, OverScrollDecoratorHelpe
 // Vertical
 OverScrollDecoratorHelper.setUpOverScroll(recyclerView, OverScrollDecoratorHelper.ORIENTATION_VERTICAL);
 ```
-
-### RecyclerView with items swiping / dragging
-See _Advanced Usage_.
 
 
 ### ListView

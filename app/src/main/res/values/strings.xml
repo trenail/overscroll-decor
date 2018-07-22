@@ -20,4 +20,7 @@
     <string name="horiz_drag_label">⇔ Drag Horizontally</string>
     <string name="vert_drag_label">⇳ Drag Vertically</string>
 
+
+    <string name="horizontal_scroll_view_demo_title">HorizontalScrollView Over-Scroll Demo</string>
+    <string name="webview_demo_title">WebView Over-Scroll Demo</string>
 </resources>
