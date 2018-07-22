@@ -14,6 +14,7 @@
 ![原版示例](recyclerview_demo.gif)
 
 # Gradle 依赖
+[ ![Download](https://api.bintray.com/packages/trenail/maven/overscroll-decor/images/download.svg) ](https://bintray.com/trenail/maven/overscroll-decor/_latestVersion)
 
 将以下内容添加到模块的 build.gradle 文件中
 
@@ -86,31 +87,6 @@ OverScrollDecoratorHelper.setUpStaticOverScroll(view, OverScrollDecoratorHelper.
 // Vertical
 OverScrollDecoratorHelper.setUpStaticOverScroll(view, OverScrollDecoratorHelper.ORIENTATION_VERTICAL);
 ```
-
-# 高级使用
-
-```java
-// Horizontal RecyclerView
-RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-new HorizontalOverScrollBounceEffectDecorator(new RecyclerViewOverScrollDecorAdapter(recyclerView));
-
-// ListView (vertical)
-ListView listView = (ListView) findViewById(R.id.list_view);
-new VerticalOverScrollBounceEffectDecorator(new AbsListViewOverScrollDecorAdapter(listView));
-
-// GridView (vertical)
-GridView gridView = (GridView) findViewById(R.id.grid_view);
-new VerticalOverScrollBounceEffectDecorator(new AbsListViewOverScrollDecorAdapter(gridView));
-
-// ViewPager
-ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
-new HorizontalOverScrollBounceEffectDecorator(new ViewPagerOverScrollDecorAdapter(viewPager));
-
-// A simple TextView - horizontal
-View textView = findViewById(R.id.title);
-new HorizontalOverScrollBounceEffectDecorator(new StaticOverScrollDecorAdapter(view));
-```
-
 
 
 设置状态监听器
@@ -206,7 +182,7 @@ new VerticalOverScrollBounceEffectDecorator(new IOverScrollDecoratorAdapter() {
 
 
 
-### 取消越界效果
+### 取消越界效果（恢复默认效果）
 ```java
 IOverScrollDecor decor =  OverScrollDecoratorHelper.setUpOverScroll(listView);
 decor.attach();
