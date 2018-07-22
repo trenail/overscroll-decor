@@ -63,17 +63,20 @@ ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
 OverScrollDecoratorHelper.setUpOverScroll(viewPager);
 ```
 
-### ScrollView, HorizontalScrollView
+### ScrollView
 
 ```java
 ScrollView scrollView = (ScrollView) findViewById(R.id.scroll_view);
 OverScrollDecoratorHelper.setUpOverScroll(scrollView);
-    
+```
+
+### HorizontalScrollView
+```java
 HorizontalScrollView horizontalScrollView = (HorizontalScrollView) findViewById(R.id.horizontal_scroll_view);
 OverScrollDecoratorHelper.setUpOverScroll(horizontalScrollView);
 ```
 
-### Any View - Text, Image... (Always Over-Scroll Ready)
+### 其他View- TextView, ImageView... 
 
 ```java
 View view = findViewById(R.id.demo_view);
@@ -84,7 +87,7 @@ OverScrollDecoratorHelper.setUpStaticOverScroll(view, OverScrollDecoratorHelper.
 OverScrollDecoratorHelper.setUpStaticOverScroll(view, OverScrollDecoratorHelper.ORIENTATION_VERTICAL);
 ```
 
-# Advanced Usage
+# 高级使用
 
 ```java
 // Horizontal RecyclerView
@@ -108,30 +111,10 @@ View textView = findViewById(R.id.title);
 new HorizontalOverScrollBounceEffectDecorator(new StaticOverScrollDecorAdapter(view));
 ```
 
-### RecyclerView with [ItemTouchHelper](http://developer.android.com/reference/android/support/v7/widget/helper/ItemTouchHelper.html) based swiping / dragging
-As of version 1.0.1, the effect can work smoothly with the RecyclerView's built-in mechanism for items swiping and dragging (based on [ItemTouchHelper](http://developer.android.com/reference/android/support/v7/widget/helper/ItemTouchHelper.html)). BUT, it requires some (very little) explicit configuration work:
 
-```java
-// Normally you would attach an ItemTouchHelper & a callback to a RecyclerView, this way:
-RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-ItemTouchHelper.Callback myCallback = new ItemTouchHelper.Callback() {
-	...
-};
-ItemTouchHelper myHelper = new ItemTouchHelper(myCallback);
-myHelper.attachToRecyclerView(recyclerView);
 
-// INSTEAD of attaching the helper yourself, simply use the dedicated adapter c'tor, e.g.:
-new VerticalOverScrollBounceEffectDecorator(new RecyclerViewOverScrollDecorAdapter(recyclerView, myCallback));
+设置状态监听器
 
-```
-
-For more info on the swiping / dragging mechanism, try [this useful tutorial](https://medium.com/@ipaulpro/drag-and-swipe-with-recyclerview-b9456d2b1aaf).
-
-### Over-Scroll Listeners
-As of version 1.0.2, the effect provides a means for registering listeners of over-scroll related events. There are two types of listeners, as follows.
-
-#### State-Change Listener
-The over-scroll manager dispatches events onto a state-change listener denoting transitions in the effect's state:
 
 ```java
 
@@ -151,6 +134,9 @@ decor.setOverScrollStateListener(new IOverScrollStateListener() {
 	        case STATE_DRAG_END_SIDE:
 	            // Dragging started at the right-end.
 	            break;
+	        case STATE_FLING:
+	            //抛掷越界状态
+	            break;
 	        case STATE_BOUNCE_BACK:
 	            if (oldState == STATE_DRAG_START_SIDE) {
 	                // Dragging stopped -- view is starting to bounce back from the *left-end* onto natural position.
@@ -163,8 +149,7 @@ decor.setOverScrollStateListener(new IOverScrollStateListener() {
 }
 ```
 
-#### Real-time Updates Listener
-The over-scroll manager can also dispatch *real-time*, as-it-happens over-scroll events denoting the current offset resulting due to an over-scroll being in-effect (the offset thus denotes the current 'intensity').
+#### 设置偏移监听器
 
 ```java
 // Note: over-scroll is set-up by explicity instantiating a decorator rather than using the helper; The two methods can be used interchangeably for registering listeners.
@@ -188,9 +173,9 @@ decor.setOverScrollUpdateListener(new IOverScrollUpdateListener() {
 ```
 
 
-The two type of listeners can be used either separately or in conjunction, depending on your needs. Refer to the demo project's RecyclerView-demo section for actual concrete usage.
+
     
-### Custom Views
+### 自定义控件使用
 
 ```java
 public class CustomView extends View {
@@ -219,43 +204,13 @@ new VerticalOverScrollBounceEffectDecorator(new IOverScrollDecoratorAdapter() {
 });
 ```
 
-### Effect Behavior Configuration
 
+
+### 取消越界效果
 ```java
-/// Make over-scroll applied over a list-view feel more 'stiff'
-new VerticalOverScrollBounceEffectDecorator(new AbsListViewOverScrollDecorAdapter(view),
-        5f, // Default is 3
-        VerticalOverScrollBounceEffectDecorator.DEFAULT_TOUCH_DRAG_MOVE_RATIO_BCK,
-        VerticalOverScrollBounceEffectDecorator.DEFAULT_DECELERATE_FACTOR);
-                
-// Make over-scroll applied over a list-view bounce-back more softly
-new VerticalOverScrollBounceEffectDecorator(new AbsListViewOverScrollDecorAdapter(view),
-        VerticalOverScrollBounceEffectDecorator.DEFAULT_TOUCH_DRAG_MOVE_RATIO_FWD,
-        VerticalOverScrollBounceEffectDecorator.DEFAULT_TOUCH_DRAG_MOVE_RATIO_BCK,
-        -1f // Default is -2
-        );
-```
-
-### Dynamic Effect Disabling
-
-As of version 1.0.4, the effect can be dynamically disabled (detached) and reenabled (attached) at runtime:
-
-```java
-IOverScrollDecor decor = OverScrollDecoratorHelper.setUpOverScroll(view);
-
-// Detach. You are strongly encouraged to only call this when overscroll isn't
-// in-effect: Either add getCurrentState()==STATE_IDLE as a precondition,
-// or use a state-change listener.
-decor.detach();
-// Attach.
+IOverScrollDecor decor =  OverScrollDecoratorHelper.setUpOverScroll(listView);
 decor.attach();
 ```
 
-`attach()` and `detach()` can be used repeatedly - as necessary, as can be seen in the demo project (refer to action-bar menu in recycler-view demo).
 
-## Credits
 
-App icons by <a href="http://somerandomdude.com/work/iconic/">P.J. Onori</a>,
-<a href="http://graphicriver.net/item/wirecons-vector-icons/4586710?ref=tmthymllr">Timothy Miller</a>,
-<a href="http://icons4android.com">Icons4Android</a>, 
-<a href="http://icons8.com/android-icons">Icons8.com</a>
