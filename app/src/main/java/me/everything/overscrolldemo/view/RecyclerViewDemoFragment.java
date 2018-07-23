@@ -85,7 +85,7 @@ public class RecyclerViewDemoFragment extends Fragment {
 
     private void initHorizontalRecyclerView(RecyclerView recyclerView) {
         LayoutInflater appInflater = LayoutInflater.from(getActivity().getApplicationContext());
-        RecyclerView.Adapter adapter = new DemoRecyclerAdapterHorizontal(DemoContentHelper.getSpectrumItems(getResources()), appInflater);
+        RecyclerView.Adapter adapter = new DemoRecyclerAdapterHorizontal(DemoContentHelper.getReverseSpectrumItems(getResources()), appInflater);
         recyclerView.setAdapter(adapter);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));

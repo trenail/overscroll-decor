@@ -1,3 +1,4 @@
+[ ![Download](https://api.bintray.com/packages/trenail/maven/overscroll-decor/images/download.svg) ](https://bintray.com/trenail/maven/overscroll-decor/_latestVersion)
 
 # 支持所有可滚动View 的 越界回弹效果，支持横向纵向，例如 RecyclerView, ListView, GridView, ScrollView ...
  
@@ -11,10 +12,10 @@
 4.扩展方便，支持自定义布局管理器，自定义控件
 
 
-![原版示例](recyclerview_demo.gif)
+![效果示例](diagram/效果图.gif)
 
 # Gradle 依赖
-[ ![Download](https://api.bintray.com/packages/trenail/maven/overscroll-decor/images/download.svg) ](https://bintray.com/trenail/maven/overscroll-decor/_latestVersion)
+
 
 将以下内容添加到模块的 build.gradle 文件中
 
