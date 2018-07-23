@@ -43,7 +43,7 @@ public class WebViewDemoFragment extends Fragment {
         webSettings.setLoadsImagesAutomatically(true); //支持自动加载图片
         webSettings.setDefaultTextEncodingName("utf-8");//设置编码格式
 
-        //OverScrollDecoratorHelper.setUpOverScroll( webView);
+        OverScrollDecoratorHelper.setUpOverScroll( webView);
         return fragmentView;
     }
 

@@ -74,7 +74,7 @@ public abstract class OverScrollBounceEffectDecoratorBase implements IOverScroll
     public static final float DEFAULT_TOUCH_DRAG_MOVE_RATIO_BCK = 1f;
     public static final float DEFAULT_DECELERATE_FACTOR = -2f;
 
-    public static final float DEFAULT_TOUCH_FLING_MOVE_RATIO = 0.02f;//默认的抛掷速度与距离比值
+    public static final float DEFAULT_TOUCH_FLING_MOVE_RATIO = 0.01f;//默认的抛掷速度与距离比值
 
     protected static final int MAX_BOUNCE_BACK_DURATION_MS = 800;
     protected static final int MIN_BOUNCE_BACK_DURATION_MS = 200;
@@ -278,6 +278,7 @@ public abstract class OverScrollBounceEffectDecoratorBase implements IOverScroll
 
         @Override
         public void handleEntryTransition(IDecoratorState fromState) {
+            mVelocityTracker.clear();
             mStateListener.onOverScrollStateChange(OverScrollBounceEffectDecoratorBase.this, fromState.getStateId(), this.getStateId());
         }
     }
